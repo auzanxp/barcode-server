@@ -1,0 +1,12 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.DS_Store
+database.sql
+config/app.config.json
+config/*.pem
+public/pictures/**/*.png
+public/pictures/**/*jpeg
+public/pictures/**/*.jpg
+public/pictures/**/*.svg
+public/pictures/**/*.mp4
