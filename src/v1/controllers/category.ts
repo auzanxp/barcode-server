@@ -33,11 +33,18 @@ export const getCategoryById = async (req: Request, res: Response): Promise<void
         console.log(error.message);
         sendApiResponse(res, 'error', 500, null, 'Internal Server Error!');
     }
-}
+};
 
 export const addCategory = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, price } = req.body;
+
+        const existingCategory = await db.category.findUnique({ where: { name } });
+        if (existingCategory) {
+            sendApiResponse(res, 'error', 400, null, 'Kategori dengan nama ini sudah ada!');
+            return;
+        }
+
         const data = {
           name,
           price
@@ -49,7 +56,7 @@ export const addCategory = async (req: Request, res: Response): Promise<void> =>
         console.log(error.message);
         sendApiResponse(res, 'error', 500, null, 'Internal Server Error!');
     }
-}
+};
 
 export const updateCategory = async (req: Request, res: Response): Promise<void> => { 
     try {
@@ -73,7 +80,7 @@ export const updateCategory = async (req: Request, res: Response): Promise<void>
         console.log(error.message);
         sendApiResponse(res, 'error', 500, null, 'Internal Server Error!');
   }
-}
+};
 
 export const deleteCategory = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -87,4 +94,4 @@ export const deleteCategory = async (req: Request, res: Response): Promise<void>
         console.log(error.message);
         sendApiResponse(res, 'error', 500, null, 'Internal Server Error!');
     }
-}
+};
