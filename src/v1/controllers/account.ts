@@ -77,14 +77,20 @@ export const loginAccount = async (req: Request, res: Response): Promise<void> =
     }
 
     const secret = process.env.JWT_SECRET!;
+    
     const expiresIn = 60 * 60 * 24
+    const expirationDate = new Date(Date.now() + expiresIn * 1000);
+    const expiredAt = expirationDate.toISOString();
+
     const token = jwt.sign({ id: data.id }, secret, { expiresIn });
 
     const payload = {
-      id: data.id,
-      email: data.email,
+      user: {
+        id: data.id,
+        email: data.email,
+      },
       token,
-      expiresIn,
+      expiredAt,
     }
 
     sendApiResponse(res, 'success', 200, payload, 'Login berhasil!');
